@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan JSX</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17.0.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.12.4/babel.js"></script>
+    <script type="text/babel">
+        const App = () => {
+            // destructuring array from React.useState and set first state for local storage
+            const [counter, setCounter] = React.useState(parseInt(localStorage.getItem("counter") ?? "0"))
+            
+            // set side effect, will be running every any changed on counter
+            React.useEffect(() => {
+                localStorage.setItem("counter", counter)
+            }, [counter])
+
+            // increase counter value then set state
+            const increase = () => {
+                setCounter(counter + 1)
+            }
+
+            // decrease counter value then set state
+            const decrease = () => {
+                setCounter(counter - 1)
+            }
+
+            return (
+                <div>
+                    <p>counter : {counter}</p>
+                    <button onClick={increase}>increase</button>
+                    <button onClick={decrease}>decrease</button>
+                </div>
+            )
+        }
+        
+        // render DOM
+        const rootElement = document.getElementById("root");
+        ReactDOM.render(<App />, rootElement);
+    </script>
+</body>
+</html>
